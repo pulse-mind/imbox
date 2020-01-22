@@ -130,7 +130,10 @@ def decode_content(message):
     try:
         return content.decode(charset, 'ignore')
     except LookupError:
-        return content.decode(charset.replace("-", ""), 'ignore')
+        try:
+            return content.decode(charset.replace("-", ""), 'ignore')
+        except LookupError:
+            return content.decode('utf8', 'ignore')
     except AttributeError:
         return content
 
